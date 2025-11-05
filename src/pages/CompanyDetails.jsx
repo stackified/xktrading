@@ -1,12 +1,12 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useParams, Link } from 'react-router-dom';
-import { getCompanyById } from '../controllers/companiesController.js';
-import ImageWithFallback from '../components/shared/ImageWithFallback.jsx';
-import { getReviewsByCompanyId } from '../controllers/reviewsController.js';
-import StarRating from '../components/reviews/StarRating.jsx';
-import CompanyReviewCard from '../components/reviews/CompanyReviewCard.jsx';
-import CompanyReviewForm from '../components/reviews/CompanyReviewForm.jsx';
+import React from "react";
+import { Helmet } from "react-helmet-async";
+import { useParams, Link } from "react-router-dom";
+import { getCompanyById } from "../controllers/companiesController.js";
+import ImageWithFallback from "../components/shared/ImageWithFallback.jsx";
+import { getReviewsByCompanyId } from "../controllers/reviewsController.js";
+import StarRating from "../components/reviews/StarRating.jsx";
+import CompanyReviewCard from "../components/reviews/CompanyReviewCard.jsx";
+import CompanyReviewForm from "../components/reviews/CompanyReviewForm.jsx";
 
 function CompanyDetails() {
   const { companyId } = useParams();
@@ -18,7 +18,7 @@ function CompanyDetails() {
   const [userReview, setUserReview] = React.useState(null);
 
   const user = (() => {
-    const s = sessionStorage.getItem('xktf_user');
+    const s = sessionStorage.getItem("xktf_user");
     return s ? JSON.parse(s) : null;
   })();
 
@@ -28,7 +28,7 @@ function CompanyDetails() {
 
   React.useEffect(() => {
     if (user && reviews.length > 0) {
-      const review = reviews.find(r => r.userId === user.id);
+      const review = reviews.find((r) => r.userId === user.id);
       setUserReview(review || null);
     } else {
       setUserReview(null);
@@ -40,12 +40,12 @@ function CompanyDetails() {
     try {
       const [companyRes, reviewsRes] = await Promise.all([
         getCompanyById(companyId),
-        getReviewsByCompanyId(companyId)
+        getReviewsByCompanyId(companyId),
       ]);
       setCompany(companyRes.data);
       setReviews(reviewsRes.data || []);
     } catch (error) {
-      console.error('Error loading company details:', error);
+      console.error("Error loading company details:", error);
     } finally {
       setLoading(false);
     }
@@ -85,7 +85,9 @@ function CompanyDetails() {
         <div className="card">
           <div className="card-body text-center">
             <h2 className="text-xl font-semibold mb-2">Company not found</h2>
-            <p className="text-gray-400 mb-4">The company you're looking for doesn't exist.</p>
+            <p className="text-gray-400 mb-4">
+              The company you're looking for doesn't exist.
+            </p>
             <Link to="/reviews" className="btn btn-primary">
               Back to Reviews
             </Link>
@@ -95,20 +97,29 @@ function CompanyDetails() {
     );
   }
 
-  const validPromoCodes = company.promoCodes?.filter(p => new Date(p.validTo) > new Date()) || [];
-  const featuredPromos = validPromoCodes.filter(p => p.featured);
-  const regularPromos = validPromoCodes.filter(p => !p.featured);
+  const validPromoCodes =
+    company.promoCodes?.filter((p) => new Date(p.validTo) > new Date()) || [];
+  const featuredPromos = validPromoCodes.filter((p) => p.featured);
+  const regularPromos = validPromoCodes.filter((p) => !p.featured);
 
   return (
     <div className="bg-gray-950 text-white min-h-screen">
       <Helmet>
         <title>{company.name} | XK Trading Floor</title>
-        <meta name="description" content={`${company.details || 'Read reviews and details about'} ${company.name} on XK Trading Floor.`} />
+        <meta
+          name="description"
+          content={`${company.details || "Read reviews and details about"} ${
+            company.name
+          } on XK Trading Floor.`}
+        />
       </Helmet>
 
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
         {/* Back Button */}
-        <Link to="/reviews" className="text-accent hover:text-accent/80 text-sm inline-flex items-center gap-1">
+        <Link
+          to="/reviews"
+          className="text-accent hover:text-accent/80 text-sm inline-flex items-center gap-1"
+        >
           ← Back to Companies
         </Link>
 
@@ -133,12 +144,16 @@ function CompanyDetails() {
                         {company.category}
                       </span>
                       <div className="flex items-center gap-2">
-                        <StarRating value={company.ratingsAggregate} size={20} />
+                        <StarRating
+                          value={company.ratingsAggregate}
+                          size={20}
+                        />
                         <span className="text-lg font-semibold">
                           {company.ratingsAggregate.toFixed(1)}
                         </span>
                         <span className="text-sm text-gray-400">
-                          ({company.totalReviews || 0} {company.totalReviews === 1 ? 'review' : 'reviews'})
+                          ({company.totalReviews || 0}{" "}
+                          {company.totalReviews === 1 ? "review" : "reviews"})
                         </span>
                       </div>
                     </div>
@@ -164,10 +179,15 @@ function CompanyDetails() {
         {validPromoCodes.length > 0 && (
           <div className="card">
             <div className="card-body">
-              <h2 className="text-xl font-semibold mb-4">Promo Codes & Offers</h2>
+              <h2 className="text-xl font-semibold mb-4">
+                Promo Codes & Offers
+              </h2>
               <div className="space-y-4">
                 {featuredPromos.map((promo) => (
-                  <div key={promo.id} className="p-4 rounded-lg bg-gradient-to-r from-green-500/20 to-green-600/20 border-2 border-green-500/50">
+                  <div
+                    key={promo.id}
+                    className="p-4 rounded-lg bg-gradient-to-r from-green-500/20 to-green-600/20 border-2 border-green-500/50"
+                  >
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
@@ -182,16 +202,20 @@ function CompanyDetails() {
                           {promo.discount}% OFF
                         </div>
                         {promo.terms && (
-                          <p className="text-sm text-gray-300 mt-2">{promo.terms}</p>
+                          <p className="text-sm text-gray-300 mt-2">
+                            {promo.terms}
+                          </p>
                         )}
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="text-xs text-gray-400 mb-1">Valid until</div>
+                        <div className="text-xs text-gray-400 mb-1">
+                          Valid until
+                        </div>
                         <div className="text-sm font-semibold">
-                          {new Date(promo.validTo).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
+                          {new Date(promo.validTo).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
                           })}
                         </div>
                       </div>
@@ -199,7 +223,10 @@ function CompanyDetails() {
                   </div>
                 ))}
                 {regularPromos.map((promo) => (
-                  <div key={promo.id} className="p-3 rounded-lg bg-gray-800/50 border border-gray-700">
+                  <div
+                    key={promo.id}
+                    className="p-3 rounded-lg bg-gray-800/50 border border-gray-700"
+                  >
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
@@ -211,13 +238,16 @@ function CompanyDetails() {
                           </span>
                         </div>
                         {promo.terms && (
-                          <p className="text-xs text-gray-400 mt-1">{promo.terms}</p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            {promo.terms}
+                          </p>
                         )}
                       </div>
                       <div className="text-xs text-gray-400 flex-shrink-0">
-                        Expires {new Date(promo.validTo).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric'
+                        Expires{" "}
+                        {new Date(promo.validTo).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
                         })}
                       </div>
                     </div>
@@ -269,7 +299,9 @@ function CompanyDetails() {
             {reviews.length === 0 ? (
               <div className="text-center py-12">
                 <div className="text-gray-400 mb-2">No reviews yet.</div>
-                <div className="text-sm text-gray-500">Be the first to review this company!</div>
+                <div className="text-sm text-gray-500">
+                  Be the first to review this company!
+                </div>
               </div>
             ) : (
               <div className="space-y-4">
@@ -292,5 +324,3 @@ function CompanyDetails() {
 }
 
 export default CompanyDetails;
-
-

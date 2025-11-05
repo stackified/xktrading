@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XK Trading Floor</title>
+    <script>
+      // GitHub Pages SPA routing fix
+      // This file is served when GitHub Pages can't find a file
+      // We redirect to index.html which will handle the routing via React Router
+      var basePath = "/xktrading/";
+      var indexPath = basePath + "index.html";
+
+      // Get the current path and preserve query/hash
+      var path = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+
+      // If we're not already at index.html, redirect there
+      // React Router will then handle the actual routing
+      if (
+        !path.endsWith("index.html") &&
+        path !== basePath &&
+        path !== "/xktrading"
+      ) {
+        var redirectUrl = indexPath;
+        if (search) redirectUrl += search;
+        if (hash) redirectUrl += hash;
+        window.location.replace(redirectUrl);
+      } else {
+        // If we're already at index.html, just load it
+        window.location.replace(indexPath + search + hash);
+      }
+    </script>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: system-ui, -apple-system, sans-serif;
+      "
+    >
+      <p>Loading...</p>
+    </div>
+  </body>
+</html>

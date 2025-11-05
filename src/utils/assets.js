@@ -8,10 +8,27 @@ export const getAssetPath = (path) => {
   // If path already starts with base URL, return as is
   if (path.startsWith(import.meta.env.BASE_URL)) return path;
   // If path starts with /, prepend base URL
-  if (path.startsWith('/')) {
+  if (path.startsWith("/")) {
     return `${import.meta.env.BASE_URL}${path.slice(1)}`;
   }
   // Otherwise, return path as is (relative paths)
   return path;
 };
 
+/**
+ * Generate company logo path from company name
+ * Converts company name to slug format (e.g., "Alpha Brokers" -> "alpha-brokers.png")
+ * @param {string} companyName - Company name (e.g., "Alpha Brokers")
+ * @returns {string} - Logo path (e.g., "/assets/companies/alpha-brokers.png")
+ */
+export const getCompanyLogoPath = (companyName) => {
+  if (!companyName) return "/assets/placeholder.jpg";
+  // Convert to lowercase, replace spaces with hyphens, remove special characters
+  const slug = companyName
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+  return `/assets/companies/${slug}.png`;
+};

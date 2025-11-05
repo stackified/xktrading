@@ -1,18 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import StarRating from './StarRating.jsx';
-import ImageWithFallback from '../shared/ImageWithFallback.jsx';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import StarRating from "./StarRating.jsx";
+import ImageWithFallback from "../shared/ImageWithFallback.jsx";
 
 function CompanyCard({ company }) {
   const categoryColors = {
-    Broker: 'bg-blue-500/20 text-blue-400',
-    PropFirm: 'bg-purple-500/20 text-purple-400',
-    Crypto: 'bg-yellow-500/20 text-yellow-400'
+    Broker: "bg-blue-500/20 text-blue-400",
+    PropFirm: "bg-purple-500/20 text-purple-400",
+    Crypto: "bg-yellow-500/20 text-yellow-400",
   };
 
-  const featuredPromo = company.promoCodes?.find(p => p.featured) || company.promoCodes?.[0];
-  const isPromoValid = featuredPromo && new Date(featuredPromo.validTo) > new Date();
+  const featuredPromo =
+    company.promoCodes?.find((p) => p.featured) || company.promoCodes?.[0];
+  const isPromoValid =
+    featuredPromo && new Date(featuredPromo.validTo) > new Date();
 
   return (
     <motion.div
@@ -40,10 +42,15 @@ function CompanyCard({ company }) {
                   {company.name}
                 </Link>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className={`text-xs px-2 py-0.5 rounded ${categoryColors[company.category] || 'bg-gray-500/20 text-gray-400'}`}>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded ${
+                      categoryColors[company.category] ||
+                      "bg-gray-500/20 text-gray-400"
+                    }`}
+                  >
                     {company.category}
                   </span>
-                  {company.status === 'pending' && (
+                  {company.status === "pending" && (
                     <span className="text-xs px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400">
                       Pending Approval
                     </span>
@@ -58,7 +65,8 @@ function CompanyCard({ company }) {
                   </span>
                 </div>
                 <div className="text-xs text-gray-400 mt-0.5">
-                  ({company.totalReviews || 0} {company.totalReviews === 1 ? 'review' : 'reviews'})
+                  ({company.totalReviews || 0}{" "}
+                  {company.totalReviews === 1 ? "review" : "reviews"})
                 </div>
               </div>
             </div>
@@ -69,15 +77,20 @@ function CompanyCard({ company }) {
               <div className="mt-3 p-2 rounded bg-green-500/10 border border-green-500/30">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-xs text-green-400 font-semibold">Featured Promo</div>
-                    <div className="text-sm font-mono text-green-300">{featuredPromo.code}</div>
+                    <div className="text-xs text-green-400 font-semibold">
+                      Featured Promo
+                    </div>
+                    <div className="text-sm font-mono text-green-300">
+                      {featuredPromo.code}
+                    </div>
                   </div>
                   <div className="text-right">
                     <div className="text-sm font-bold text-green-400">
                       {featuredPromo.discount}% OFF
                     </div>
                     <div className="text-xs text-gray-400">
-                      Expires {new Date(featuredPromo.validTo).toLocaleDateString()}
+                      Expires{" "}
+                      {new Date(featuredPromo.validTo).toLocaleDateString()}
                     </div>
                   </div>
                 </div>
@@ -107,4 +120,3 @@ function CompanyCard({ company }) {
 }
 
 export default CompanyCard;
-

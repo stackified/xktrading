@@ -1,13 +1,14 @@
-import React from 'react';
-import StarRating from './StarRating.jsx';
-import { deleteReview } from '../../controllers/reviewsController.js';
+import React from "react";
+import StarRating from "./StarRating.jsx";
+import { deleteReview } from "../../controllers/reviewsController.js";
+import { getAssetPath } from "../../utils/assets.js";
 
 function CompanyReviewCard({ review, currentUserId, onUpdate, onDelete }) {
   const [deleting, setDeleting] = React.useState(false);
   const isOwner = review.userId === currentUserId;
 
   async function handleDelete() {
-    if (!confirm('Are you sure you want to delete this review?')) {
+    if (!confirm("Are you sure you want to delete this review?")) {
       return;
     }
 
@@ -16,7 +17,7 @@ function CompanyReviewCard({ review, currentUserId, onUpdate, onDelete }) {
       await deleteReview(review.id);
       onDelete?.();
     } catch (error) {
-      alert(error.message || 'Failed to delete review');
+      alert(error.message || "Failed to delete review");
     } finally {
       setDeleting(false);
     }
@@ -27,11 +28,11 @@ function CompanyReviewCard({ review, currentUserId, onUpdate, onDelete }) {
       <div className="flex items-start gap-3 mb-3">
         <div className="h-10 w-10 rounded-full bg-muted overflow-hidden flex-shrink-0">
           <img
-            src={review.userAvatar}
+            src={getAssetPath(review.userAvatar)}
             alt={review.userName}
             className="h-full w-full object-cover"
             onError={(e) => {
-              e.target.src = '/assets/users/default-avatar.jpg';
+              e.target.src = getAssetPath("/assets/users/default-avatar.jpg");
             }}
           />
         </div>
@@ -40,10 +41,10 @@ function CompanyReviewCard({ review, currentUserId, onUpdate, onDelete }) {
             <div>
               <div className="font-semibold">{review.userName}</div>
               <div className="text-xs text-gray-400">
-                {new Date(review.createdAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
+                {new Date(review.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
                 })}
                 {review.updatedAt !== review.createdAt && (
                   <span className="ml-2 text-gray-500">(edited)</span>
@@ -63,7 +64,7 @@ function CompanyReviewCard({ review, currentUserId, onUpdate, onDelete }) {
                   disabled={deleting}
                   className="text-xs text-red-400 hover:text-red-300 disabled:opacity-50"
                 >
-                  {deleting ? 'Deleting...' : 'Delete'}
+                  {deleting ? "Deleting..." : "Delete"}
                 </button>
               </div>
             )}
@@ -80,4 +81,3 @@ function CompanyReviewCard({ review, currentUserId, onUpdate, onDelete }) {
 }
 
 export default CompanyReviewCard;
-
