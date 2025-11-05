@@ -7,30 +7,18 @@
     <script>
       // GitHub Pages SPA routing fix
       // This file is served when GitHub Pages can't find a file
-      // We redirect to index.html which will handle the routing via React Router
+      // We need to load index.html while preserving the original path
       var basePath = "/xktrading/";
-      var indexPath = basePath + "index.html";
-
-      // Get the current path and preserve query/hash
       var path = window.location.pathname;
       var search = window.location.search;
       var hash = window.location.hash;
 
-      // If we're not already at index.html, redirect there
-      // React Router will then handle the actual routing
-      if (
-        !path.endsWith("index.html") &&
-        path !== basePath &&
-        path !== "/xktrading"
-      ) {
-        var redirectUrl = indexPath;
-        if (search) redirectUrl += search;
-        if (hash) redirectUrl += hash;
-        window.location.replace(redirectUrl);
-      } else {
-        // If we're already at index.html, just load it
-        window.location.replace(indexPath + search + hash);
-      }
+      // Store the original path in sessionStorage so React Router can use it
+      sessionStorage.setItem("github-404-redirect", path);
+
+      // Redirect to index.html
+      // After index.html loads, React Router will check sessionStorage and restore the path
+      window.location.replace(basePath + "index.html" + search + hash);
     </script>
   </head>
   <body>
