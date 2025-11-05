@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/slices/cartSlice.js';
+import ImageWithFallback from '../shared/ImageWithFallback.jsx';
 
 function ProductDetailsView({ product }) {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ function ProductDetailsView({ product }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="card overflow-hidden">
-        <img src={product.image} alt={product.name} className="w-full h-96 object-cover" />
+        <ImageWithFallback src={product.image} fallback="/assets/placeholder.jpg" alt={product.name} className="w-full h-96 object-cover" />
       </div>
       <div className="card">
         <div className="card-body">

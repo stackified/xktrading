@@ -2,13 +2,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { getAllEvents } from "../../controllers/eventsController.js";
 import { Calendar, User } from "lucide-react";
+import ImageWithFallback from "../shared/ImageWithFallback.jsx";
 
 function EventCard({ evt, onRegister }) {
   return (
     <motion.div whileHover={{ y: -4 }} className="card overflow-hidden">
       <div className="h-40 w-full bg-muted">
-        <img
+        <ImageWithFallback
           src={evt.image}
+          fallback="/assets/placeholder.jpg"
           alt={evt.title}
           className="h-full w-full object-cover"
         />

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import StarRating from './StarRating.jsx';
+import ImageWithFallback from '../shared/ImageWithFallback.jsx';
 
 function CompanyCard({ company }) {
   const categoryColors = {
@@ -22,13 +23,11 @@ function CompanyCard({ company }) {
       <div className="card-body">
         <div className="flex items-start gap-4">
           <div className="h-16 w-16 rounded-lg bg-muted overflow-hidden flex-shrink-0">
-            <img
+            <ImageWithFallback
               src={company.logo}
+              fallback="/assets/placeholder.jpg"
               alt={company.name}
               className="h-full w-full object-cover"
-              onError={(e) => {
-                e.target.src = '/assets/placeholder.jpg';
-              }}
             />
           </div>
           <div className="flex-1 min-w-0">

@@ -1,13 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { updateQuantity, removeFromCart } from '../../redux/slices/cartSlice.js';
+import ImageWithFallback from '../shared/ImageWithFallback.jsx';
 
 function CartItem({ item }) {
   const dispatch = useDispatch();
   return (
     <div className="flex gap-3 items-center">
       <div className="h-16 w-16 rounded bg-muted overflow-hidden">
-        {item.image && <img src={item.image} alt={item.name} className="h-full w-full object-cover" />}
+        {item.image && <ImageWithFallback src={item.image} fallback="/assets/placeholder.jpg" alt={item.name} className="h-full w-full object-cover" />}
       </div>
       <div className="flex-1">
         <div className="text-sm font-semibold">{item.name}</div>

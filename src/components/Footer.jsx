@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getAssetPath } from '../utils/assets.js';
 
 function Footer() {
   return (
@@ -8,7 +9,7 @@ function Footer() {
         <div>
           <Link to="/" className="flex items-center gap-2 mb-4">
             <img
-              src="/assets/logo.png"
+              src={getAssetPath("/assets/logo.png")}
               alt="XK Trading Floor Logo"
               className="h-8 w-8 rounded object-cover"
             />

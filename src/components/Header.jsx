@@ -5,6 +5,8 @@ import { ChevronDown } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, syncUserFromCookie } from "../redux/slices/authSlice.js";
 import { getUserCookie } from "../utils/cookies.js";
+import { getAssetPath } from "../utils/assets.js";
+import ImageWithFallback from "./shared/ImageWithFallback.jsx";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -60,12 +62,13 @@ function Header() {
   const location = useLocation();
   const reduxUser = useSelector((state) => state.auth.user);
   // Fallback to cookie if Redux user is not available (for cross-tab sync)
-  const user = reduxUser || (typeof window !== 'undefined' ? getUserCookie() : null);
+  const user =
+    reduxUser || (typeof window !== "undefined" ? getUserCookie() : null);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   // Sync user from cookie on mount and when storage changes (cross-tab sync)
   const lastSyncedRef = React.useRef(null);
-  
+
   React.useEffect(() => {
     // Only sync once on mount if needed - don't re-sync on every reduxUser change
     const cookieUser = getUserCookie();
@@ -77,7 +80,7 @@ function Header() {
         lastSyncedRef.current = cookieStr;
       }
     }
-    
+
     const handleStorageChange = () => {
       // Storage events only fire from other tabs, so safe to sync
       dispatch(syncUserFromCookie());
@@ -86,10 +89,10 @@ function Header() {
         lastSyncedRef.current = JSON.stringify(updatedCookie);
       }
     };
-    
+
     // Listen for storage events (cross-tab sync)
-    window.addEventListener('storage', handleStorageChange);
-    
+    window.addEventListener("storage", handleStorageChange);
+
     // Also check periodically for cookie changes (since cookies don't trigger storage events)
     const interval = setInterval(() => {
       const currentCookieUser = getUserCookie();
@@ -106,9 +109,9 @@ function Header() {
         lastSyncedRef.current = null;
       }
     }, 3000); // Check every 3 seconds
-    
+
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
       clearInterval(interval);
     };
   }, [dispatch]); // Only dispatch in dependencies - sync once on mount
@@ -138,7 +141,7 @@ function Header() {
           className="flex items-center gap-1.5 md:gap-2 transition-transform hover:scale-105 flex-shrink-0"
         >
           <img
-            src="/assets/logo.png"
+            src={getAssetPath("/assets/logo.png")}
             alt="XK Trading Floor Logo"
             className="h-10 w-8 md:h-14 md:w-10 rounded object-cover"
           />
@@ -244,8 +247,9 @@ function Header() {
                 aria-expanded={menuOpen}
                 aria-label="User menu"
               >
-                <img
+                <ImageWithFallback
                   src={user.avatar || "/assets/users/default-avatar.jpg"}
+                  fallback="/assets/users/default-avatar.jpg"
                   alt="User avatar"
                   className="h-7 w-7 lg:h-8 lg:w-8 rounded-full object-cover ring-2 ring-blue-500/20 flex-shrink-0"
                 />
@@ -268,13 +272,13 @@ function Header() {
                     className="absolute right-0 top-12 w-48 border border-gray-800 bg-gray-900/95 backdrop-blur-xl rounded-lg shadow-2xl overflow-hidden"
                     role="menu"
                   >
-                    {(user?.role === 'admin' || user?.role === 'operator') && (
+                    {(user?.role === "admin" || user?.role === "operator") && (
                       <button
                         onClick={() => {
                           setMenuOpen(false);
                           // Use navigate with a small delay to ensure menu closes first
                           setTimeout(() => {
-                            navigate('/dashboard');
+                            navigate("/dashboard");
                           }, 100);
                         }}
                         className="block w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-gray-800/50 transition-colors border-b border-gray-800"
@@ -364,12 +368,12 @@ function Header() {
               <div className="pt-4 mt-2 border-t border-gray-800 flex flex-col gap-2">
                 {user ? (
                   <>
-                    {(user?.role === 'admin' || user?.role === 'operator') && (
+                    {(user?.role === "admin" || user?.role === "operator") && (
                       <button
                         onClick={() => {
                           setOpen(false);
                           setTimeout(() => {
-                            navigate('/dashboard');
+                            navigate("/dashboard");
                           }, 100);
                         }}
                         className="w-full text-left px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"

@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageWithFallback from '../shared/ImageWithFallback.jsx';
 
 export function FeatureCard({ icon, title, description }) {
   return (
@@ -17,7 +18,7 @@ export function FeatureCard({ icon, title, description }) {
 export function EventCard({ event, onView }) {
   return (
     <div className="card overflow-hidden">
-      <img src={event.image} alt={event.title} className="h-40 w-full object-cover" />
+      <ImageWithFallback src={event.image} fallback="/assets/placeholder.jpg" alt={event.title} className="h-40 w-full object-cover" />
       <div className="card-body">
         <div className="flex items-center justify-between mb-2">
           <span className={`text-xs px-2 py-0.5 rounded border ${event.type === 'online' ? 'text-blue-300 border-blue-700' : 'text-green-300 border-green-700'}`}>{event.type}</span>
@@ -50,7 +51,7 @@ export function ReviewCard({ company, onView }) {
       <div className="card-body">
         <div className="flex items-center gap-3 mb-3">
           <div className="h-10 w-10 rounded bg-muted overflow-hidden">
-            <img src={company.logo} alt={company.name} className="h-full w-full object-cover" />
+            <ImageWithFallback src={company.logo} fallback="/assets/placeholder.jpg" alt={company.name} className="h-full w-full object-cover" />
           </div>
           <div>
             <div className="text-sm text-gray-400">{company.category}</div>
@@ -70,7 +71,7 @@ export function ReviewCard({ company, onView }) {
 export function ProductCard({ product, onView }) {
   return (
     <div className="card h-full overflow-hidden">
-      <img src={product.images?.[0]} alt={product.title} className="h-44 w-full object-cover" />
+      <ImageWithFallback src={product.images?.[0]} fallback="/assets/placeholder.jpg" alt={product.title} className="h-44 w-full object-cover" />
       <div className="card-body">
         <h3 className="font-semibold mb-1">{product.title}</h3>
         <p className="text-sm text-gray-400 line-clamp-2">{product.description}</p>

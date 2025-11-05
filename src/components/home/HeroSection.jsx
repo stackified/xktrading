@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { getAssetPath } from '../../utils/assets.js';
 
 function HeroSection() {
   return (
@@ -99,7 +100,7 @@ function HeroSection() {
               className="absolute z-30 flex items-center justify-center"
             >
               <motion.img
-                src="/assets/logo.png"
+                src={getAssetPath("/assets/logo.png")}
                 alt="XK Trading Floor Logo"
                 className="h-64 w-48 md:h-80 md:w-60 lg:h-96 lg:w-72 object-contain drop-shadow-2xl"
                 animate={{

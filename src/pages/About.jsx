@@ -6,6 +6,7 @@ import AnimatedDivider from "../components/shared/AnimatedDivider.jsx";
 import { Rocket, ShieldCheck, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+import ImageWithFallback from "../components/shared/ImageWithFallback.jsx";
 
 function About() {
   return (
@@ -75,10 +76,11 @@ function About() {
               className="card bg-gray-900/60 border border-border"
             >
               <div className="card-body">
-                <img
+                <ImageWithFallback
                   src={`/assets/leadership/leader-${leader.id}.jpg`}
+                  fallback="/assets/placeholder.jpg"
                   alt={leader.name}
-                  className="w-full aspect-[3.2/3] object-cover  rounded-md mb-3"
+                  className="w-full aspect-[3.2/3] object-cover rounded-md mb-3"
                 />
                 <div className="font-semibold">{leader.name}</div>
                 <div className="text-sm text-gray-400">{leader.role}</div>

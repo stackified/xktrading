@@ -1,4 +1,5 @@
 import React from "react";
+import { getAssetPath } from "../../utils/assets.js";
 
 /**
  * ImageWithFallback - A reusable image component with fallback handling
@@ -9,6 +10,7 @@ import React from "react";
  * @param {string} className - Additional CSS classes
  * @param {object} ...props - Other img element props
  */
+
 export default function ImageWithFallback({
   src,
   fallback = "/assets/placeholder.jpg",
@@ -16,18 +18,18 @@ export default function ImageWithFallback({
   className = "",
   ...props
 }) {
-  const [imgSrc, setImgSrc] = React.useState(src);
+  const [imgSrc, setImgSrc] = React.useState(getAssetPath(src));
   const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
-    setImgSrc(src);
+    setImgSrc(getAssetPath(src));
     setHasError(false);
   }, [src]);
 
   const handleError = () => {
-    if (!hasError && imgSrc !== fallback) {
+    if (!hasError && imgSrc !== getAssetPath(fallback)) {
       setHasError(true);
-      setImgSrc(fallback);
+      setImgSrc(getAssetPath(fallback));
     }
   };
 

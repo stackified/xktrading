@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import { getEventById } from "../controllers/eventsController.js";
+import ImageWithFallback from "../components/shared/ImageWithFallback.jsx";
 
 function EventDetails() {
   const { eventId } = useParams();
@@ -17,7 +18,7 @@ function EventDetails() {
           setEvent(foundEvent);
         }
       } catch (error) {
-        console.error('Error loading event:', error);
+        console.error("Error loading event:", error);
       } finally {
         setLoading(false);
       }
@@ -44,7 +45,9 @@ function EventDetails() {
         <div className="card">
           <div className="card-body text-center">
             <h2 className="text-xl font-semibold mb-2">Event not found</h2>
-            <p className="text-gray-400 mb-4">The event you're looking for doesn't exist.</p>
+            <p className="text-gray-400 mb-4">
+              The event you're looking for doesn't exist.
+            </p>
             <Link to="/academy" className="btn btn-primary">
               Back to Events
             </Link>
@@ -58,12 +61,19 @@ function EventDetails() {
     <div className="max-w-5xl mx-auto px-4 py-10">
       <Helmet>
         <title>{event.title} | XK Trading Floor</title>
-        <meta name="description" content={event.excerpt || 'View event details and register for XK Trading Floor workshops and webinars.'} />
+        <meta
+          name="description"
+          content={
+            event.excerpt ||
+            "View event details and register for XK Trading Floor workshops and webinars."
+          }
+        />
       </Helmet>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 card overflow-hidden">
-          <img
-            src={event.image || '/assets/placeholder.jpg'}
+          <ImageWithFallback
+            src={event.image || "/assets/placeholder.jpg"}
+            fallback="/assets/placeholder.jpg"
             alt={event.title}
             className="h-64 w-full object-cover"
           />
@@ -83,9 +93,14 @@ function EventDetails() {
               )}
             </div>
             <div className="text-sm text-gray-300 mb-4">
-              {event.dateTime ? new Date(event.dateTime).toLocaleString() : event.date} {event.location ? `• ${event.location}` : ''}
+              {event.dateTime
+                ? new Date(event.dateTime).toLocaleString()
+                : event.date}{" "}
+              {event.location ? `• ${event.location}` : ""}
             </div>
-            <p className="text-gray-300 mb-4">{event.excerpt || event.description || ''}</p>
+            <p className="text-gray-300 mb-4">
+              {event.excerpt || event.description || ""}
+            </p>
             {event.freebiesIncluded && event.freebiesIncluded.length > 0 && (
               <div>
                 <h3 className="font-semibold mb-1">What you get</h3>

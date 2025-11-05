@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getAllBlogs, getBlogById } from '../controllers/blogsController.js';
 import BlogAuthorInfo from '../components/blog/BlogAuthorInfo.jsx';
+import ImageWithFallback from '../components/shared/ImageWithFallback.jsx';
 
 function BlogPost() {
   const { id } = useParams();
@@ -32,7 +33,7 @@ function BlogPost() {
       <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="bg-gray-900/50 border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="h-64 w-full rounded-xl overflow-hidden bg-muted mb-6">
-            {post.image && <img src={post.image} alt={post.title} className="h-full w-full object-cover" />}
+            {post.image && <ImageWithFallback src={post.image} fallback="/assets/placeholder.jpg" alt={post.title} className="h-full w-full object-cover" />}
           </div>
           <h1 className="text-3xl font-semibold">{post.title}</h1>
           <div className="text-sm text-gray-400 mt-1">{post.author} • {post.date} • {post.readTime}</div>

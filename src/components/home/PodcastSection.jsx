@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
+import ImageWithFallback from '../shared/ImageWithFallback.jsx';
 
 function PodcastSection() {
   const videos = [
@@ -68,13 +69,11 @@ function PodcastSection() {
               className="card group cursor-pointer hover:scale-[1.03] transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 block"
             >
               <div className="relative">
-                <img
+                <ImageWithFallback
                   src={video.thumbnail}
+                  fallback="/assets/placeholder.jpg"
                   alt={video.title}
                   className="w-full h-64 object-cover rounded-t-lg"
-                  onError={(e) => {
-                    e.target.src = '/assets/placeholder.jpg';
-                  }}
                 />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30 group-hover:scale-110 transition-transform">

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { getAllEvents } from '../../controllers/eventsController.js';
 import { Link, useNavigate } from 'react-router-dom';
+import ImageWithFallback from '../shared/ImageWithFallback.jsx';
 
 function EventCard({ evt, onClick }) {
   const formatDate = (dateString) => {
@@ -17,7 +18,7 @@ function EventCard({ evt, onClick }) {
   return (
     <motion.div whileHover={{ y: -4 }} className="card overflow-hidden cursor-pointer" onClick={onClick}>
       <div className="h-40 w-full bg-muted">
-        <img src={evt.image || '/assets/placeholder.jpg'} alt={evt.title} className="h-full w-full object-cover" />
+        <ImageWithFallback src={evt.image || '/assets/placeholder.jpg'} fallback="/assets/placeholder.jpg" alt={evt.title} className="h-full w-full object-cover" />
       </div>
       <div className="card-body">
         <div className="text-xs text-gray-400">{formatDate(evt.dateTime || evt.date)}</div>

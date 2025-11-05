@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
 import { getCompanyById } from '../controllers/companiesController.js';
+import ImageWithFallback from '../components/shared/ImageWithFallback.jsx';
 import { getReviewsByCompanyId } from '../controllers/reviewsController.js';
 import StarRating from '../components/reviews/StarRating.jsx';
 import CompanyReviewCard from '../components/reviews/CompanyReviewCard.jsx';
@@ -116,13 +117,11 @@ function CompanyDetails() {
           <div className="card-body">
             <div className="flex items-start gap-4">
               <div className="h-20 w-20 rounded-lg bg-muted overflow-hidden flex-shrink-0">
-                <img
+                <ImageWithFallback
                   src={company.logo}
+                  fallback="/assets/placeholder.jpg"
                   alt={company.name}
                   className="h-full w-full object-cover"
-                  onError={(e) => {
-                    e.target.src = '/assets/placeholder.jpg';
-                  }}
                 />
               </div>
               <div className="flex-1">

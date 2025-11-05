@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getProductById, getAllProducts } from '../controllers/productsController.js';
 import ProductDetailsView from '../components/merch/ProductDetailsView.jsx';
+import ImageWithFallback from '../components/shared/ImageWithFallback.jsx';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -38,7 +39,7 @@ function ProductDetails() {
           {related.map(r => (
             <div key={r.id} className="card cursor-pointer" onClick={()=>navigate(`/merch/${r.id}`)}>
               <div className="h-40 w-full bg-muted overflow-hidden">
-                <img src={r.image} alt={r.name} className="h-full w-full object-cover" />
+                <ImageWithFallback src={r.image} fallback="/assets/placeholder.jpg" alt={r.name} className="h-full w-full object-cover" />
               </div>
               <div className="card-body">
                 <div className="text-xs text-blue-300">{r.category}</div>

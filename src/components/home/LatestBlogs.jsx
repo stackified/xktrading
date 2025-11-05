@@ -2,12 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { getAllBlogs } from '../../controllers/blogsController.js';
 import { Link, useNavigate } from 'react-router-dom';
+import ImageWithFallback from '../shared/ImageWithFallback.jsx';
 
 function BlogCard({ post, onClick }) {
   return (
     <motion.div whileHover={{ y: -4 }} className="card overflow-hidden cursor-pointer" onClick={onClick}>
       <div className="h-40 w-full bg-muted">
-        <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
+        <ImageWithFallback src={post.image} fallback="/assets/placeholder.jpg" alt={post.title} className="h-full w-full object-cover" />
       </div>
       <div className="card-body">
         <div className="text-xs text-gray-400">{post.author} • {post.date}</div>
